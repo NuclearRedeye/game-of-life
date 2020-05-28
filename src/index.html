@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>Conways Game Of Life</title>
+  </head>
+  <body>
+    <canvas id="lifeGrid" width="500px" height="500px"></canvas>
+  </body>
+  <script type="text/javascript" src="index.js"></script>
+  <script type="text/javascript">
+    window.onload = () => {
+      let grid = new conwayGrid(500, 500);
+      grid.setGrid();
+      grid.getGrid();
+      grid.displayGrid();
+      grid.run();
+    };
+  </script>
+  <style>
+    #lifeGrid {
+      border: red 1px solid;
+    }
+  </style>
+</html>
