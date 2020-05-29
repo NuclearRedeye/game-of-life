@@ -1,79 +1,72 @@
-class conwayGrid {
-  constructor(xSize, ySize) {
-    this.xSize = xSize;
-    this.ySize = ySize;
-    this.grid = Array();
-    this.organismColour = ['green', 'red'];
-    this.deadColour = 'red';
+function createGrid(rows, columns) {
+  let retVal = new Array(columns);
+  for (let column = 0; column < columns; column++) {
+    retVal[column] = new Array(rows).fill(0);
   }
+  return retVal;
+}
 
-  setGrid() {
-    for (let i = 0; i < this.ySize; i++) {
-      this.grid[i] = Array(this.xSize);
-      for (let j = 0; j < this.xSize; j++) {
-        let living = i % Math.floor(Math.random() * 10) == 0 ? 1 : 0;
-        this.grid[i][j] = living;
-      }
+function cloneGrid(grid) {
+  const columns = grid.length;
+  const rows = grid[0].length;
+  let retVal = new Array(columns);
+  for (let column = 0; column < columns; column++) {
+    retVal[column] = new Array(rows);
+    for (let row = 0; row < rows; row++) {
+      retVal[column][row] = grid[column][row];
     }
   }
+  return retVal;
+}
 
-  getGrid() {
-    return this.grid;
-  }
-
-  displayGrid() {
-    let grid = document.getElementById('lifeGrid');
-    let ctx = grid.getContext('2d');
-
-    for (let i = 0; i < this.grid.length; i++) {
-      for (let j = 0; j < this.grid[i].length; j++) {
-        //console.log('sdfsdf')
-        ctx.beginPath();
-        ctx.rect(i, j, 1, 1);
-        ctx.fillStyle = this.organismColour[this.grid[i][j]];
-        ctx.fill();
-      }
+function seedGrid(grid, seed = 50) {
+  const columns = grid.length;
+  const rows = grid[0].length;
+  for (let column = 0; column < columns; column++) {
+    for (let row = 0; row < rows; row++) {
+      grid[column][row] = Math.floor(Math.random() * 100) < seed ? 1 : 0;
     }
-  }
-
-  tick() {
-    console.log('tick');
-    for (let i = 1; i < this.grid.length - 1; i++) {
-      for (let j = 1; j < this.grid[i].length - 1; j++) {
-        let count = 0;
-
-        count += this.grid[i][j - 1];
-        count += this.grid[i - 1][j - 1];
-        count += this.grid[i - 1][j + 1];
-        count += this.grid[i][j + 1];
-        count += this.grid[i - 1][j];
-        count += this.grid[i + 1][j];
-        count += this.grid[i + 1][j + 1];
-        count += this.grid[i + 1][j - 1];
-
-        if (count == 2 && this.grid[i][j] == 1) {
-          this.grid[i][j] = 1;
-        } else if (count == 3) {
-          this.grid[i][j] = 1;
-        } else {
-          this.grid[i][j] = 0;
-        }
-      }
-    }
-
-    this.displayGrid();
-  }
-
-  run(itterations) {
-    setInterval(() => {
-      this.tick();
-    }, 10);
   }
 }
 
-class organism {
-  constructor() {
-    this.state = 'dead';
-    //this.position = {x: 0, y: 0}
+function renderGrid(grid, context) {
+  const columns = grid.length;
+  const rows = grid[0].length;
+  for (let column = 0; column < columns; column++) {
+    for (let row = 0; row < rows; row++) {
+      context.beginPath();
+      context.rect(row, column, 1, 1);
+      context.fillStyle = grid[column][row] ? 'black' : 'white';
+      context.fill();
+    }
   }
+}
+
+function step(grid) {
+  const columns = grid.length;
+  const rows = grid[0].length;
+  let retVal = createGrid(rows, columns);
+  for (let column = 1; column < columns - 1; column++) {
+    for (let row = 1; row < rows - 1; row++) {
+      let count = 0;
+
+      count += grid[column][row - 1];
+      count += grid[column - 1][row - 1];
+      count += grid[column - 1][row + 1];
+      count += grid[column][row + 1];
+      count += grid[column - 1][row];
+      count += grid[column + 1][row];
+      count += grid[column + 1][row + 1];
+      count += grid[column + 1][row - 1];
+
+      if (count == 2 && grid[column][row] == 1) {
+        retVal[column][row] = 1;
+      } else if (count == 3) {
+        retVal[column][row] = 1;
+      } else {
+        retVal[column][row] = 0;
+      }
+    }
+  }
+  return retVal;
 }

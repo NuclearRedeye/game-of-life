@@ -1,21 +1,37 @@
 <html>
   <head>
-    <title>Conways Game Of Life</title>
+    <title>Conway's Game Of Life</title>
   </head>
   <body>
-    <canvas id="lifeGrid" width="500px" height="500px"></canvas>
+    <h1>Conway's Game Of Life</h1>
+    <p>
+      A quick implementation of
+      <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway's Game of Life</a> using a HTML 5 Canvas
+    </p>
+    <canvas id="lifeGrid" width="400px" height="300px"></canvas>
   </body>
   <script type="text/javascript" src="index.js"></script>
   <script type="text/javascript">
     window.onload = () => {
-      let grid = new conwayGrid(500, 500);
-      grid.setGrid();
-      grid.getGrid();
-      grid.displayGrid();
-      grid.run();
+      const canvas = document.getElementById('lifeGrid');
+      const context = canvas.getContext('2d');
+
+      let grid = createGrid(400, 300);
+      seedGrid(grid, 50);
+      renderGrid(grid, context);
+
+      setInterval(() => {
+        grid = step(grid);
+        renderGrid(grid, context);
+      }, 100);
     };
   </script>
   <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
     #lifeGrid {
       border: red 1px solid;
     }
