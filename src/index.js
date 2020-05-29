@@ -78,18 +78,18 @@ function step(grid) {
   const columns = grid.length;
   const rows = grid[0].length;
   let retVal = createGrid(rows, columns);
-  for (let column = 1; column < columns - 1; column++) {
-    for (let row = 1; row < rows - 1; row++) {
+  for (let column = 0; column < columns; column++) {
+    for (let row = 0; row < rows; row++) {
       let count = 0;
 
-      count += grid[column][row - 1];
-      count += grid[column - 1][row - 1];
-      count += grid[column - 1][row + 1];
-      count += grid[column][row + 1];
-      count += grid[column - 1][row];
-      count += grid[column + 1][row];
-      count += grid[column + 1][row + 1];
-      count += grid[column + 1][row - 1];
+      count += row > 0 ? grid[column][row - 1] : 0;
+      count += row > 0 && column > 0 ? grid[column - 1][row - 1] : 0;
+      count += row < rows - 1 && column > 0 ? grid[column - 1][row + 1] : 0;
+      count += row < rows - 1 ? grid[column][row + 1] : 0;
+      count += column > 0 ? grid[column - 1][row] : 0;
+      count += column < columns - 1 ? grid[column + 1][row] : 0;
+      count += column < columns - 1 && row < rows - 1 ? grid[column + 1][row + 1] : 0;
+      count += column < columns - 1 && row > 0 ? grid[column + 1][row - 1] : 0;
 
       if (count == 2 && grid[column][row] == 1) {
         retVal[column][row] = 1;
