@@ -1,3 +1,10 @@
+/**
+ * Creates a grid using the supplied dimensions
+ *
+ * @param {*} rows Number of rows in the Grid
+ * @param {*} columns Number of columns in the Grid
+ * @returns
+ */
 function createGrid(rows, columns) {
   let retVal = new Array(columns);
   for (let column = 0; column < columns; column++) {
@@ -6,6 +13,12 @@ function createGrid(rows, columns) {
   return retVal;
 }
 
+/**
+ * Clones a grid
+ *
+ * @param {*} grid The grid to clone
+ * @returns A deep-copy of the supplied grid
+ */
 function cloneGrid(grid) {
   const columns = grid.length;
   const rows = grid[0].length;
@@ -19,6 +32,12 @@ function cloneGrid(grid) {
   return retVal;
 }
 
+/**
+ * Seeds the specified grid with some starting data using the specified life ratio
+ *
+ * @param {*} grid The grid to seed
+ * @param {number} [seed=50] The approximate percentage of life.
+ */
 function seedGrid(grid, seed = 50) {
   const columns = grid.length;
   const rows = grid[0].length;
@@ -29,6 +48,12 @@ function seedGrid(grid, seed = 50) {
   }
 }
 
+/**
+ * Renders a grid to the specified context
+ *
+ * @param {*} grid The grid to render
+ * @param {*} context HTML5 CanvasContext2D to render to
+ */
 function renderGrid(grid, context) {
   const columns = grid.length;
   const rows = grid[0].length;
@@ -42,6 +67,12 @@ function renderGrid(grid, context) {
   }
 }
 
+/**
+ * Applies the rules using the supplied grid and returns the next itteration.
+ *
+ * @param {*} grid
+ * @returns A new grid
+ */
 function step(grid) {
   const columns = grid.length;
   const rows = grid[0].length;
