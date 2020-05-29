@@ -53,14 +53,15 @@ function seedGrid(grid, seed = 50) {
  *
  * @param {*} grid The grid to render
  * @param {*} context HTML5 CanvasContext2D to render to
+ * @param {*} sf Scale factor to apply when rendering
  */
-function renderGrid(grid, context) {
+function renderGrid(grid, context, sf) {
   const columns = grid.length;
   const rows = grid[0].length;
   for (let column = 0; column < columns; column++) {
     for (let row = 0; row < rows; row++) {
       context.beginPath();
-      context.rect(row, column, 1, 1);
+      context.rect(row * sf, column * sf, 1 * sf, 1 * sf);
       context.fillStyle = grid[column][row] ? 'black' : 'white';
       context.fill();
     }

@@ -8,21 +8,28 @@
       A quick implementation of
       <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway's Game of Life</a> using a HTML 5 Canvas
     </p>
-    <canvas id="lifeGrid" width="400px" height="300px"></canvas>
+    <canvas id="lifeGrid"></canvas>
   </body>
   <script type="text/javascript" src="index.js"></script>
   <script type="text/javascript">
+    const width = 400;
+    const height = 300;
+    const sf = 2;
+
     window.onload = () => {
       const canvas = document.getElementById('lifeGrid');
+      canvas.width = width * sf;
+      canvas.height = height * sf;
+
       const context = canvas.getContext('2d');
 
-      let grid = createGrid(400, 300);
+      let grid = createGrid(width, height);
       seedGrid(grid, 50);
-      renderGrid(grid, context);
+      renderGrid(grid, context, sf);
 
       setInterval(() => {
         grid = step(grid);
-        renderGrid(grid, context);
+        renderGrid(grid, context, sf);
       }, 100);
     };
   </script>
